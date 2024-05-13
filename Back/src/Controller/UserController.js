@@ -109,7 +109,7 @@ const login = async (req, res) => {
   }
 };
 
-const insertArticlePicture = async (req, res) => {
+const insertImage = async (req, res) => {
   let newFileName;
   let storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -154,4 +154,4 @@ const insertArticlePicture = async (req, res) => {
     }
   });
 };
-module.exports = { register, login, insertArticlePicture };
+module.exports = { register, login, insertImage };
