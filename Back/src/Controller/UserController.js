@@ -14,6 +14,7 @@ const register = async (req, res) => {
   if (
     !req.body.first_name ||
     !req.body.last_name ||
+    !req.body.image ||
     !req.body.email ||
     !req.body.password
   ) {
@@ -48,7 +49,7 @@ const register = async (req, res) => {
         first_name,
         hashedPassword,
       ];
-
+      console.log(insertVALUES);
       const [rows] = await pool.execute(sqlInsertRequest, insertVALUES);
 
       if (rows.affectedRows > 0) {
@@ -83,28 +84,24 @@ const login = async (req, res) => {
     if (result.length === 0) {
       res.status(401).json({ error: "Invalid Credentials" });
     } else {
-      await bcrypt.compare(
-        password,
-        result[0].password,
-        function (err, bcryptresult) {
-          if (err) {
-            res.status(401).json({ error: "Not valid Credentials" });
-            return;
-          }
+      const hash = await bcrypt.compareSync(password, result[0].user_password);
 
-          const token = jwt.sign(
-            {
-              email: result[0].email,
-              id: result[0].id,
-              role: result[0].role,
-            },
-            process.env.MY_SECRET_KEY,
-            { expiresIn: "20d" }
-          );
-          res.status(200).json({ jwt: token, role: result[0].role });
-          return;
-        }
-      );
+      if (!hash) {
+        res.status(401).json({ error: "Not valid Credentials" });
+        return;
+      } else {
+        const token = jwt.sign(
+          {
+            email: result[0].email,
+            id: result[0].id,
+            role: result[0].role,
+          },
+          process.env.MY_SECRET_KEY,
+          { expiresIn: "20d" }
+        );
+        res.status(200).json({ jwt: token, role: result[0].role });
+        return;
+      }
     }
   } catch (error) {
     console.log(error.stack);
@@ -157,4 +154,4 @@ const insertArticlePicture = async (req, res) => {
     }
   });
 };
-module.exports = { register, login };
+module.exports = { register, login, insertArticlePicture };
