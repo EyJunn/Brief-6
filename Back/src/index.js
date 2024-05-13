@@ -1,12 +1,14 @@
 const express = require("express");
 const cors = require("cors");
+const { connect } = require("./Services/NoSqlConnection");
 const app = express();
-const { connect } = require("./Services/Connection");
+
+require("dotenv").config();
 
 app.use(express.json());
 app.use(cors());
 
-connect("mongodb://127.0.0.1:27017/", (error) => {
+connect(process.env.MY_MONGODB, (error) => {
   if (error) {
     console.log("Failed to connect");
     process.exit(-1);
@@ -15,5 +17,11 @@ connect("mongodb://127.0.0.1:27017/", (error) => {
   }
 });
 
-console.log("(🌸◕ワ◕)(⁄ ⁄◕⁄ω⁄◕⁄ ⁄✿)");
-app.listen(3006);
+//MongoDB
+app.listen(3009);
+console.log("No no don't touch me there, that is my no no square");
+
+//SQL
+app.listen(process.env.PORT, () => {
+  console.log("(🌸◕ワ◕)(⁄ ⁄◕⁄ω⁄◕⁄ ⁄✿)");
+});
