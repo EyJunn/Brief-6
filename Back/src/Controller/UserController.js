@@ -1,7 +1,14 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const bcrypt = require("bcrypt");
-const { pool } = require("../Services/DBConnection");
+const { pool } = require("../Services/SqlConnection");
+const express = require("express");
+const path = require("path");
+const multer = require("multer");
+const app = express();
+const uploadDirectory = path.join(__dirname, "../public/uploads");
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
 
 const register = async (req, res) => {
   if (
@@ -16,13 +23,14 @@ const register = async (req, res) => {
 
   let first_name = req.body.first_name;
   let last_name = req.body.last_name;
+  let image = req.body.image;
   let email = req.body.email;
   let password = req.body.password;
 
   try {
     const values = [email];
 
-    const sqlSelectRequest = "SELECT user_email FROM users WHERE user_email =?";
+    const sqlSelectRequest = "SELECT user_email FROM user WHERE user_email =?";
     const [result] = await pool.execute(sqlSelectRequest, values);
 
     if (result.length !== 0) {
@@ -31,9 +39,15 @@ const register = async (req, res) => {
       const hashedPassword = await bcrypt.hash(password, 10);
 
       const sqlInsertRequest =
-        "INSERT INTO users (first_name, last_name, email, password) VALUES(?, ?, ?, ?)";
+        "INSERT INTO user (user_email, user_image, user_last_name, user_first_name, user_password) VALUES(?, ?, ?, ?, ?)";
 
-      const insertVALUES = [first_name, last_name, email, hashedPassword];
+      const insertVALUES = [
+        email,
+        image,
+        last_name,
+        first_name,
+        hashedPassword,
+      ];
 
       const [rows] = await pool.execute(sqlInsertRequest, insertVALUES);
 
@@ -62,7 +76,7 @@ const login = async (req, res) => {
   try {
     const values = [email];
 
-    const sql = "SELECT * FROM users WHERE email=?";
+    const sql = "SELECT * FROM user WHERE user_email=?";
 
     const [result] = await pool.execute(sql, values);
 
@@ -98,4 +112,49 @@ const login = async (req, res) => {
   }
 };
 
+const insertArticlePicture = async (req, res) => {
+  let newFileName;
+  let storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, uploadDirectory);
+    },
+    filename: function (req, file, cb) {
+      newFileName = `${file.fieldname}-${Date.now()}.jpg`;
+      cb(null, newFileName);
+    },
+  });
+
+  const maxSize = 3 * 1000 * 1000;
+
+  let upload = multer({
+    storage: storage,
+    limits: { fileSize: maxSize },
+    fileFilter: function (req, file, cb) {
+      var filetypes = /jpeg|jpg|png/;
+      var mimetype = filetypes.test(file.mimetype);
+
+      var extname = filetypes.test(
+        path.extname(file.originalname).toLowerCase()
+      );
+
+      if (mimetype && extname) {
+        return cb(null, true);
+      }
+
+      cb(
+        "Error: File upload only supports the " +
+          "following filetypes - " +
+          filetypes
+      );
+    },
+  }).single("image");
+
+  upload(req, res, function (err) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send({ newFileName: newFileName });
+    }
+  });
+};
 module.exports = { register, login };
