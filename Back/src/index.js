@@ -3,6 +3,7 @@ const cors = require("cors");
 const { connect } = require("./Services/NoSqlConnection");
 const app = express();
 const userRouter = require("./Controller/Routes/user");
+const postRouter = require("../src/Controller/Routes/post");
 
 require("dotenv").config();
 
@@ -10,6 +11,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/user", userRouter);
+app.use("/post", postRouter);
 
 connect(process.env.MY_MONGODB, (error) => {
   if (error) {

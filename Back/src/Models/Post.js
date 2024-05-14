@@ -1,9 +1,10 @@
 class Post {
-  constructor(title, image, description, date, userId) {
+  constructor(title, description, date, jwt) {
     this.title = title;
-    this.image = image;
     this.description = description;
     this.date = date;
-    this.userId = userId;
+    this.jwt = jwt;
   }
 }
+
+module.exports = { Post };
