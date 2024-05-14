@@ -6,5 +6,90 @@
     <title>Brief_6</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body></body>
+  <body>
+    <div
+      class="relative min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 bg-gray-500 bg-no-repeat bg-cover bg-url[('../media/ChapiChapo_Background2.png')] items-center ;"
+    >
+      <div class="absolute bg-black opacity-60 inset-0 z-0"></div>
+      <div class="max-w-md w-full space-y-8 p-10 bg-white rounded-xl z-10">
+        <div class="text-center">
+          <h2 class="mt-6 text-3xl font-bold text-gray-900">Welcome</h2>
+          <p class="mt-2 text-sm text-gray-600">Please create your account</p>
+        </div>
+        <div class="flex flex-row justify-center items-center space-x-3"></div>
+        <div class="flex items-center justify-center space-x-2"></div>
+        <div class="mt-8 space-y-6">
+          <div class="relative">
+            <div class="absolute right-0 mt-4"></div>
+            <label class="text-sm font-bold text-gray-700 tracking-wide"
+              >First name</label
+            >
+            <input
+              class="w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500 first_name"
+              id=""
+              type="text"
+              placeholder="Tom"
+            />
+          </div>
+          <div class="relative">
+            <div class="absolute right-0 mt-4"></div>
+            <label class="text-sm font-bold text-gray-700 tracking-wide"
+              >Last name</label
+            >
+            <input
+              class="w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500 last_name"
+              id=""
+              type="text"
+              placeholder="Jedusor"
+            />
+          </div>
+          <div class="relative">
+            <div class="absolute right-0 mt-4"></div>
+            <label class="text-sm font-bold text-gray-700 tracking-wide"
+              >Email</label
+            >
+            <input
+              class="w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500 mail"
+              id=""
+              type="email"
+              placeholder="mail@gmail.com"
+            />
+          </div>
+          <div class="mt-8 content-center">
+            <label class="text-sm font-bold text-gray-700 tracking-wide">
+              Password
+            </label>
+            <input
+              class="w-full content-center text-base py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500 Password"
+              id=""
+              type="password"
+              placeholder="Enter your password"
+            />
+          </div>
+          <div>
+            <button
+              type="submit"
+              class="w-full flex justify-center bg-indigo-500 text-gray-100 p-4 rounded-full tracking-wide font-semibold focus:outline-none focus:shadow-outline hover:bg-indigo-600 shadow-lg cursor-pointer transition ease-in duration-300"
+              onclick="HandleRegister()"
+            >
+              Sign up
+            </button>
+          </div>
+          <div class="flex items-center justify-center space-x-2">
+            <span class="h-px w-16 bg-gray-300"></span>
+            <span class="text-gray-500 font-normal">OR</span>
+            <span class="h-px w-16 bg-gray-300"></span>
+          </div>
+          <div>
+            <a
+              class="w-full flex justify-center bg-indigo-500 text-gray-100 p-4 rounded-full tracking-wide font-semibold focus:outline-none focus:shadow-outline hover:bg-indigo-600 shadow-lg cursor-pointer transition ease-in duration-300"
+              href="./Login.html"
+            >
+              Log to your account
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
