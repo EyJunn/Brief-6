@@ -42,7 +42,7 @@ async function addPost(req, res) {
 
 async function getAllPost(req, res) {
   try {
-    let apiCall = client.db("Brief_6").collection("Post").find();
+    let apiCall = client.db("brief_6").collection("Post").find();
 
     let listings = await apiCall.toArray();
 
@@ -53,7 +53,7 @@ async function getAllPost(req, res) {
 }
 
 async function deletePost(req, res) {
-  const token = await extractToken(request);
+  const token = await extractToken(req);
 
   jwt.verify(token, process.env.My_Secret_Key, async (err, authData) => {
     if (err) {
@@ -62,13 +62,13 @@ async function deletePost(req, res) {
       return;
     } else {
       if (!req.params.id) {
-        res.status(400).send("Id Obligatoire");
+        res.status(400).send("Id required");
       }
 
       let id = new ObjectId(req.params.id);
 
       let apiCall = await client
-        .db("Brief_6")
+        .db("brief_6")
         .collection("Post")
         .deleteOne({ _id: id });
 
@@ -77,54 +77,48 @@ async function deletePost(req, res) {
       if (response.deletedCount === 1) {
         res.status(200).json({ msg: "Suppression réussie" });
       } else {
-        res.status(204).json({ msg: "Pas d'annonce pour ce post" });
+        res.status(303).json({ msg: "Pas d'annonce pour ce post" });
       }
     }
   });
 }
 
-async function editPost(req, res) {
-  const token = await extractToken(req);
+const updatePost = async (req, res) => {
+  if (!req.body.title || !req.body.description || !req.body.image) {
+    response.status(400).json({ error: "Some fields are missing" });
+  }
+  let id = new ObjectId(req.params.id);
 
-  jwt.verify(token, process.env.My_Secret_Key, async (err, authData) => {
-    if (err) {
-      console.log(err);
-      res.status(401).json({ err: "Unauthorized" });
-      return;
-    } else {
-      let image = req.body.image;
-      let description = req.body.description;
-      let title = req.body.title;
+  let event = await client.db("brief_6").collection("Post").find({ _id: id });
 
-      // if (!image || !description) {
-      //   res.status(400).json({ msg: "Missing Fields" });
-      // }
+  if (!event) {
+    res.status(401).json({ error: "Unauthorized" });
+    return;
+  }
 
-      try {
-        let apiRes = await client
-          .db("Brief_6")
-          .collection("Post")
-          .updateOne(
-            {
-              id: authData.id,
-            },
-            {
-              $set: {
-                title: title,
-                description: description,
-                image: image,
-              },
-            }
-          );
-        if (apiRes.modifiedCount === 1) {
-          res.status(200).json({ msg: "Update successful" });
+  try {
+    let apiRes = await client
+      .db("brief_6")
+      .collection("Post")
+      .updateOne(
+        { _id: id },
+        {
+          $set: {
+            title: req.body.title,
+            description: req.body.description,
+            image: req.body.image,
+          },
         }
-      } catch (error) {
-        console.error(error);
-        res.status(500).json({ msg: "Update failed" });
-      }
+      );
+    if (apiRes.modifiedCount === 1) {
+      res.status(200).json({ msg: "Update successful" });
+    } else {
+      res.status(303).json({ msg: "Bah alors qu'est-ce que tu fais là ?" });
     }
-  });
-}
+  } catch (e) {
+    console.log(e);
+    res.status(500).json(e);
+  }
+};
 
-module.exports = { addPost, deletePost, getAllPost, editPost };
+module.exports = { addPost, deletePost, getAllPost, updatePost };
