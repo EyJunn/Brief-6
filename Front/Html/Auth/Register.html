@@ -6,20 +6,33 @@
     <title>Brief_6</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
+  <body class="flex flex-col items-center justify-center">
     <div
-      class="relative min-h-screen w-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 bg-gray-500 bg-no-repeat bg-cover bg-[url('../media/ChapiChapo_Background_2.png')] items-center"
+      class="relative h-screen w-full flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 bg-gray-500 bg-no-repeat bg-cover bg-inherit bg-[url('../media/ChapiChapo_Background_2.png')] items-center"
     >
       <div class="max-w-md w-full space-y-8 p-10 bg-white rounded-xl z-10">
-        <div class="text-center">
-          <h2 class="mt-6 text-3xl font-bold text-gray-900">
-            Welcome to <img src="../media/ChapiChapo.png" />
-          </h2>
-          <p class="mt-2 text-sm text-gray-600">Please create your account</p>
+        <div class="text-center flex flex-col items-center">
+          <h2 class="mt-6 text-3xl font-bold text-gray-900">Welcome to</h2>
+          <img class="w-64 -mt-16 -mb-16" src="../media/ChapiChapo.png" />
+          <p class="mt-2 text-sm text-gray-600 -mb-16">
+            Please create your account
+          </p>
         </div>
-        <div class="flex flex-row justify-center items-center space-x-3"></div>
+
         <div class="flex items-center justify-center space-x-2"></div>
         <div class="mt-8 space-y-6">
+          <div class="relative">
+            <div class="absolute right-0 mt-4"></div>
+            <label class="text-sm font-bold text-gray-700 tracking-wide"
+              >Profil picture</label
+            >
+            <input
+              class="w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500 image"
+              id=""
+              type="file"
+              placeholder="search a picture"
+            />
+          </div>
           <div class="relative">
             <div class="absolute right-0 mt-4"></div>
             <label class="text-sm font-bold text-gray-700 tracking-wide"
@@ -93,4 +106,5 @@
       </div>
     </div>
   </body>
+  <script src="../../javascript/Auth/Auth.js"></script>
 </html>
