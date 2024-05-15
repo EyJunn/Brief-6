@@ -3,8 +3,87 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Brief_6</title>
+    <title>ChapiChapo</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body></body>
+  <body
+    class="w-full h-screen bg-cover bg-no-repeat bg-[url('../media/hat.gif')]"
+  >
+    <header
+      class="flex justify-between w-full p-5 bg-white text-center bg-opacity-60 sticky top-0 backdrop-blur-sm relative"
+    >
+      <img src="../media/ChapiChapo_header.png" class="w-64" />
+      <a
+        id="Create"
+        href="#"
+        class="w-auto rounded-full bg-cyan-500 p-2 hover:bg-opacity-40 absolute right-24 hover:cursor-pointer"
+      >
+        Create a Post
+      </a>
+      <button
+        id="LogOut"
+        class="w-auto rounded-full bg-cyan-500 p-2 hover:bg-opacity-40"
+      >
+        LogOut
+      </button>
+    </header>
+
+    <div id="cards" class="flex flex-wrap justify-center"></div>
+
+    <footer class="w-full p-5 bg-white bg-opacity-80">
+      <ol class="flex justify-evenly Chapi">
+        <li>About us</li>
+        <li>Contact</li>
+        <li>
+          <a href="#" target="_blank">ChapiChapo</a>
+        </li>
+      </ol>
+    </footer>
+  </body>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100..800&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100..800&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap");
+    .card {
+      box-shadow: 15px 0 10px rgba(0, 0, 0, 0.356);
+      font-family: "Anek Devanagari", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: bold;
+      font-style: normal;
+      font-variation-settings: "wdth" 100;
+    }
+    .title {
+      color: white;
+      font-family: "Titillium Web", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      filter: drop-shadow(0 2px 2px #000000);
+    }
+
+    .Chapi {
+      color: black;
+      font-family: "Titillium Web", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      filter: drop-shadow(0 2px 2px #6ad1e1);
+    }
+    .delete,
+    .modifier {
+      padding: 0 4px 0 4px;
+      transition: 0.5s;
+      border-radius: 10px;
+      border: none;
+    }
+    .delete:hover {
+      background: red;
+      transition: 1s;
+    }
+
+    .modifier:hover {
+      background: rgba(65, 173, 65, 0.699);
+      cursor: pointer;
+      transition: 1s;
+    }
+  </style>
+  <script src="../../javascript/Accueil/Accueil.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 </html>
