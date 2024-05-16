@@ -10,6 +10,7 @@ const app = express();
 const uploadDirectory = path.join(__dirname, "../public/uploads");
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+const { transporter } = require("../Services/mailer");
 
 const register = async (req, res) => {
   if (
@@ -52,8 +53,19 @@ const register = async (req, res) => {
       ];
       console.log(insertVALUES);
       const [rows] = await pool.execute(sqlInsertRequest, insertVALUES);
-
+      const activationToken = await bcrypt.hash(email, 10);
+      let cleanToken = activationToken.replaceAll("/", "");
       if (rows.affectedRows > 0) {
+        const info = await transporter.sendMail({
+          from: `${process.env.SMTP_EMAIL}`,
+          to: email,
+          subject: "Email activation",
+          text: "Activate your remail",
+          html: `<p> You need to activate your email, to access our services, please click on this link :
+                <a href="http://localhost:3006/user/activate/${cleanToken}">Activate your email</a>
+          </p>`,
+        });
+
         res.status(200).json({ success: "registration successful" });
         return;
       } else {
@@ -181,4 +193,26 @@ const getAllUser = async (req, res) => {
     }
   });
 };
-module.exports = { register, login, insertImage, getAllUser };
+
+const activateEmail = async (req, res) => {
+  try {
+    const token = req.params.token;
+    const sql = `SELECT FROM client WHERE token = ?`;
+    const values = [token];
+    const [result] = await pool.execute(sql, values);
+    if (!result) {
+      res.status(204).json({});
+      return;
+    }
+
+    await pool.execute(
+      `UPDATE client SET isActive = 1, token= NULL WHERE token = ?`,
+      [token]
+    );
+    res.status(200).json({ result: "Validation" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: "Server Error" });
+  }
+};
+module.exports = { register, login, insertImage, getAllUser, activateEmail };
