@@ -23,7 +23,7 @@ async function HandleLogin() {
     let role = data.role;
     window.localStorage.setItem("jwt", jwt);
 
-    window.location.href = "../../Html/Accueil/Accueil.html";
+    window.location.href = "../../Html/Profil/Profil.html";
   } else {
     alert("Wrong Credentials");
   }
