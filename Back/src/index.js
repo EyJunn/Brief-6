@@ -8,7 +8,7 @@ const postRouter = require("../src/Controller/Routes/post");
 require("dotenv").config();
 
 app.use(express.json());
-app.use(express.static("public"));
+app.use(express.static("./public"));
 app.use(cors());
 
 app.use("/user", userRouter);

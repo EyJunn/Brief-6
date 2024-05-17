@@ -168,6 +168,7 @@ const insertImage = async (req, res) => {
   });
 };
 
+//appelation du user par l'authdata
 const getAllUser = async (req, res) => {
   const token = await extractToken(req);
 
@@ -215,4 +216,5 @@ const activateEmail = async (req, res) => {
     res.status(500).json({ msg: "Server Error" });
   }
 };
+
 module.exports = { register, login, insertImage, getAllUser, activateEmail };

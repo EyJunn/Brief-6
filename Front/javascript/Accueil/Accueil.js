@@ -23,9 +23,9 @@ async function getAllEquipment() {
   );
   let response = await apiRequest.json();
   response.forEach((response) => {
-    cards.innerHTML += `<div class= "flex justify-center text-center border-solid border-2 border-white w-1/4 bg-cyan-500 bg-opacity-60 m-10 card rounded  "><div><img src="${
+    cards.innerHTML += `<div class= "flex justify-center text-center border-solid border-2 border-white w-2/4 bg-cyan-500 bg-opacity-60 m-10 card rounded  "><div><img src="${
       response.image
-    }" class='w-48 h-48 object-cover border-r-2'></div><div class= "w-auto h-auto mx-6 my-6 text-center "> <h2>${
+    }" class='w-full h-52 object-cover border-r-2'></div><div class= "w-auto h-auto mx-6 my-6 text-center "> <h2>${
       response.title
     }</h2> <p>${response.description}</p> <p>posté le ${new Date(
       response.date
