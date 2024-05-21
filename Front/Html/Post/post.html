@@ -56,7 +56,7 @@
             </label>
 
             <input
-              class="bg-white opacity-65 shadow appearance-none border-b-2 rounded-full w-48 py-2 px-3 text-black mb-3 leading-tight focus:outline-none focus:shadow-outline placeholder:text-black"
+              class="bg-white opacity-65 shadow appearance-none border-b-2 rounded-full w-48 py-2 px-3 text-black mb-3 leading-tight focus:outline-none focus:shadow-outline placeholder:text-black placeholder:text-center"
               id="title"
               type="text"
               placeholder="Titre de la publication"
@@ -69,24 +69,16 @@
                 Description
               </label>
               <input
-                class="bg-white opacity-65 shadow appearance-none border-b-2 rounded-full w-48 py-2 px-3 text-gray-500 mb-3 leading-tight focus:outline-none focus:shadow-outline placeholder:text-black"
+                class="bg-white opacity-65 shadow appearance-none border-b-2 rounded-full w-48 py-2 px-3 text-gray-500 mb-3 leading-tight focus:outline-none focus:shadow-outline placeholder:text-black placeholder:text-center"
                 id="Description"
                 type="text"
-                placeholder="Description de la publication"
-              />
-            </div>
-            <div>
-              <input
-                class="bg-inherit border-b-2"
-                type="date"
-                name="date"
-                id="date"
+                placeholder="Post description"
               />
             </div>
           </div>
           <div class="flex items-center justify-between">
             <button
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              class="bg-gradient-to-tr from-amber-500 to-orange-600 s text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="button"
               onclick="createArticle()"
             >
@@ -153,4 +145,5 @@
       transition: 1s;
     }
   </style>
+  <script src="../../javascript/Post/createPost.js"></script>
 </html>
