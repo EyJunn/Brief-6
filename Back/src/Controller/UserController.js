@@ -169,7 +169,7 @@ const insertImage = async (req, res) => {
 };
 
 //appelation du user par l'authdata
-const getAllUser = async (req, res) => {
+const getUser = async (req, res) => {
   const token = await extractToken(req);
 
   jwt.verify(token, process.env.My_Secret_Key, async (err, authData) => {
@@ -217,4 +217,4 @@ const activateEmail = async (req, res) => {
   }
 };
 
-module.exports = { register, login, insertImage, getAllUser, activateEmail };
+module.exports = { register, login, insertImage, getUser, activateEmail };

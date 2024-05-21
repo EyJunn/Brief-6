@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create your new post!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body
+    class="bg bg-center bg-no-repeat bg-cover bg-[url(../media/landscape_wallpaper.jpg)]"
+  >
+    <header
+      class="flex justify-between w-full p-5 bg-white text-center bg-opacity-60 sticky top-0 backdrop-blur-sm relative"
+    >
+      <img src="../media/ChapiChapo_header.png" class="w-16" />
+      <a
+        id="profil"
+        href="../Profil/Profil.html"
+        class="w-auto rounded-full bg-cyan-500 p-2 hover:bg-opacity-40 hover:cursor-pointer"
+      >
+        Profil
+      </a>
+      <button
+        id="LogOut"
+        class="w-auto h-10 rounded-full bg-cyan-500 p-2 hover:bg-opacity-40"
+      >
+        LogOut
+      </button>
+    </header>
+
+    <main>
+      <div class="w-full h-screen flex justify-center items-center">
+        <div
+          class="bg-inherit border border-slate-500 shadow-md rounded px-8 pt-6 pb-2 w-fit flex flex-col justify-center items-center backdrop-blur-sm"
+        >
+          <div class="mb-4 text-center">
+            <label
+              class="block text-gray-950 text-sm font-bold mb-2"
+              for="image"
+            >
+              Image
+            </label>
+            <input
+              class="bg-white opacity-65 shadow appearance-none text-center border-b-2 rounded-full w-48 py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline placeholder:text-black"
+              id="image"
+              type="url"
+              placeholder="Url Image"
+            />
+          </div>
+          <div class="mb-6 text-center">
+            <label
+              class="block text-gray-950 text-sm font-bold mb-2"
+              for="title"
+            >
+              Title of publication
+            </label>
+
+            <input
+              class="bg-white opacity-65 shadow appearance-none border-b-2 rounded-full w-48 py-2 px-3 text-black mb-3 leading-tight focus:outline-none focus:shadow-outline placeholder:text-black"
+              id="title"
+              type="text"
+              placeholder="Titre de la publication"
+            />
+            <div>
+              <label
+                class="block text-gray-950 text-sm font-bold mb-2"
+                for="Description"
+              >
+                Description
+              </label>
+              <input
+                class="bg-white opacity-65 shadow appearance-none border-b-2 rounded-full w-48 py-2 px-3 text-gray-500 mb-3 leading-tight focus:outline-none focus:shadow-outline placeholder:text-black"
+                id="Description"
+                type="text"
+                placeholder="Description de la publication"
+              />
+            </div>
+            <div>
+              <input
+                class="bg-inherit border-b-2"
+                type="date"
+                name="date"
+                id="date"
+              />
+            </div>
+          </div>
+          <div class="flex items-center justify-between">
+            <button
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="button"
+              onclick="createArticle()"
+            >
+              Creation
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="w-full p-5 bg-white bg-opacity-80 absolute bottom-0 sticky">
+      <ol class="flex justify-evenly Chapi">
+        <li>About us</li>
+        <li>Contact</li>
+        <li>
+          <a href="https://youtu.be/-OMyXgn9NUQ?feature=shared" target="_blank"
+            >ChapiChapo</a
+          >
+        </li>
+      </ol>
+    </footer>
+  </body>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100..800&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100..800&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap");
+    .card {
+      box-shadow: 15px 0 10px rgba(0, 0, 0, 0.356);
+      font-family: "Anek Devanagari", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: bold;
+      font-style: normal;
+      font-variation-settings: "wdth" 100;
+    }
+    .title {
+      color: white;
+      font-family: "Titillium Web", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      filter: drop-shadow(0 2px 2px #000000);
+    }
+
+    .Chapi {
+      color: black;
+      font-family: "Titillium Web", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      filter: drop-shadow(0 2px 2px #6ad1e1);
+    }
+    .delete,
+    .modifier {
+      padding: 0 4px 0 4px;
+      transition: 0.5s;
+      border-radius: 10px;
+      border: none;
+    }
+    .delete:hover {
+      background: red;
+      transition: 1s;
+    }
+
+    .modifier:hover {
+      background: rgba(65, 173, 65, 0.699);
+      cursor: pointer;
+      transition: 1s;
+    }
+  </style>
+</html>
