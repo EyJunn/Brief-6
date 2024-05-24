@@ -217,4 +217,37 @@ const activateEmail = async (req, res) => {
   }
 };
 
-module.exports = { register, login, insertImage, getUser, activateEmail };
+const getUserById = async (req, res) => {
+  const token = await extractToken(req);
+
+  jwt.verify(token, process.env.My_Secret_Key, async (err, authData) => {
+    if (err) {
+      console.log(err);
+      response.status(401).json({ err: "Unauthorized" });
+      return;
+    } else {
+      try {
+        const user_id = req.params.id;
+        const sql =
+          "SELECT *, CONCAT('/uploads/', user_image) as avatar FROM user WHERE user_id = ?";
+
+        const value = [user_id];
+
+        const [rows] = await pool.execute(sql, value);
+        res.json(rows);
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: "Error Server" });
+      }
+    }
+  });
+};
+
+module.exports = {
+  register,
+  login,
+  insertImage,
+  getUser,
+  activateEmail,
+  getUserById,
+};

@@ -9,6 +9,7 @@ logOut.addEventListener("click", () => {
     window.location.href = "../../Html/Auth/Login.html";
   }, 1000);
 });
+
 async function getAllEquipment() {
   let jwt = window.localStorage.getItem("jwt");
 
@@ -20,7 +21,7 @@ async function getAllEquipment() {
   };
 
   let apiRequest = await fetch(
-    "http://localhost:3006/post/getAllPost",
+    "http://localhost:3009/post/getAllPost",
     request
   );
 
@@ -29,19 +30,19 @@ async function getAllEquipment() {
   if (jwt) {
     response.forEach((response) => {
       cards.innerHTML += ` 
-    <div class= "flex justify-between text-center border-solid border-2 border-white w-2/4 bg-cyan-500 bg-opacity-60 m-10 card rounded border border-black  "><div><img src="${
+    <div class= " relative flex justify-between text-center border-solid border-2 border-white w-2/4 bg-cyan-500 bg-opacity-60 m-10 card rounded border border-black  "><div><img src="${
       response.image
-    }" class='w-56 h-56  object-cover border-r-2'></div><div class= "w-auto h-auto mx-6 my-6 text-center "> <h2 class="text-lg"> ${
+    }" class='w-72 h-56   object-cover border-r-2'></div><div class= "w-auto h-auto mx-6 my-6 pr-5 "> <h2 class="text-lg"> ${
         response.title
-      }</h2> <p><span class="text-white">Coeur de la publication:</span> <br>${
+      }</h2> <br><br>${
         response.description
-      }</p> <p><span class="text-white">posté le:</span> <br> ${new Date(
+      }</p> <p class="absolute bottom-0 right-0">  ${new Date(
         response.date
       ).toLocaleDateString(
         "fr"
-      )}</p> <button class="">Like</button> <button class="">Dislike</button>${
+      )}</p> <br><button class="">Like</button> <button class="">Dislike</button>${
         response.role === "admin"
-          ? `<button onclick="Modifier('${response._id}')" class="mx-1 modifier ${response._id} ">Modifier</button><button class="mx-1 delete" onclick="deleteArticle('${response._id}') ">Supprimer</button>`
+          ? `<button class="mx-1 delete" onclick="deleteArticle('${response._id}') ">Supprimer</button>`
           : ""
       }</div></div> `;
     });
