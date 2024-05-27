@@ -217,7 +217,7 @@ const activateEmail = async (req, res) => {
   }
 };
 
-const getUserById = async (req, res) => {
+const getAllUser = async (req, res) => {
   const token = await extractToken(req);
 
   jwt.verify(token, process.env.My_Secret_Key, async (err, authData) => {
@@ -227,13 +227,10 @@ const getUserById = async (req, res) => {
       return;
     } else {
       try {
-        const user_id = req.params.id;
         const sql =
-          "SELECT *, CONCAT('/uploads/', user_image) as avatar FROM user WHERE user_id = ?";
+          "SELECT *, CONCAT('/uploads/', user_image) as avatar FROM user ";
 
-        const value = [user_id];
-
-        const [rows] = await pool.execute(sql, value);
+        const [rows] = await pool.execute(sql);
         res.json(rows);
       } catch (error) {
         console.log(error);
@@ -249,5 +246,5 @@ module.exports = {
   insertImage,
   getUser,
   activateEmail,
-  getUserById,
+  getAllUser,
 };

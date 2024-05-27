@@ -17,6 +17,7 @@ async function getAllEquipment() {
     method: "GET",
     headers: {
       "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${jwt}`,
     },
   };
 
@@ -26,9 +27,13 @@ async function getAllEquipment() {
   );
 
   let response = await apiRequest.json();
+  let date = response.jwt;
+  let role = response.role;
+
+  console.log(jwt);
 
   if (jwt) {
-    response.forEach((response) => {
+    response.post.forEach((response) => {
       cards.innerHTML += ` 
     <div class= " relative flex justify-between text-center border-solid border-2 border-white w-2/4 bg-cyan-500 bg-opacity-60 m-10 card rounded border border-black  "><div><img src="${
       response.image
@@ -40,9 +45,9 @@ async function getAllEquipment() {
         response.date
       ).toLocaleDateString(
         "fr"
-      )}</p> <br><button class="">Like</button> <button class="">Dislike</button>${
-        response.role === "admin"
-          ? `<button class="mx-1 delete" onclick="deleteArticle('${response._id}') ">Supprimer</button>`
+      )}</p> <br><button class=""> Like </button> <button class=""> Dislike </button>${
+        role === "admin"
+          ? `<button class="mx-1 delete" onclick="deleteArticle('${response._id}') "> Supprimer </button>`
           : ""
       }</div></div> `;
     });

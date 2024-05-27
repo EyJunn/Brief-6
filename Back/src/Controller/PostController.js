@@ -41,15 +41,25 @@ async function addPost(req, res) {
 }
 
 async function getAllPost(req, res) {
-  try {
-    let apiCall = client.db("brief_6").collection("Post").find();
+  const token = await extractToken(req);
 
-    let listings = await apiCall.toArray();
+  jwt.verify(token, process.env.MY_SECRET_KEY, async (err, authData) => {
+    if (err) {
+      console.log(err);
+      res.status(401).json({ err: "Unauthorized" });
+      return;
+    } else {
+      try {
+        let apiCall = client.db("brief_6").collection("Post").find();
 
-    res.status(200).json(listings);
-  } catch (e) {
-    res.status(500).json({ error: e });
-  }
+        let listings = await apiCall.toArray();
+
+        res.status(200).json({ post: listings, role: authData.role });
+      } catch (e) {
+        res.status(500).json({ error: e });
+      }
+    }
+  });
 }
 
 async function deletePost(req, res) {

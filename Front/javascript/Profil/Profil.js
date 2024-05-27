@@ -45,13 +45,13 @@ async function GetPostFromCourantUser() {
   let apiPost = await fetch("http://localhost:3009/post/getAllPost", request);
   let post = await apiPost.json();
 
-  post.forEach((Post) => {
+  post.post.forEach((Post) => {
     if (user[0].user_id === Post.userId) {
       cards.innerHTML += `<div class= " relative flex justify-between text-center border-solid border-2 border-white w-2/4 bg-[#eac079] bg-opacity-20 m-10 card rounded border border-black  "><div><img src="${
         Post.image
       }" class='w-56 h-56  object-cover border-r-2'></div><div class= "w-auto h-auto mx-6 my-6 text-center "> <h2 class="text-lg"> ${
         Post.title
-      }</h2> <br> <br>${
+      }</h2> <br> <br><p>${
         Post.description
       }</p>  <br> <p class="absolute bottom-0 right-0"> ${new Date(
         Post.date
@@ -61,7 +61,7 @@ async function GetPostFromCourantUser() {
           : ""
       }${
         Post.role === "admin"
-          ? `n><button class="mx-1 delete" onclick="deleteArticle('${Post._id}') ">Supprimer</button>`
+          ? `<button class="mx-1 delete" onclick="deleteArticle('${Post._id}') ">Supprimer</button>`
           : ""
       }</div></div> `;
     }
@@ -69,3 +69,28 @@ async function GetPostFromCourantUser() {
 }
 
 GetPostFromCourantUser();
+
+async function getAllUserByBeAdmin() {
+  let jwt = window.localStorage.getItem("jwt");
+
+  let request = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${jwt}`,
+    },
+  };
+
+  let apiRequest = await fetch(
+    "http://localhost:3006/user/getAllUser",
+    request
+  );
+
+  let response = await apiRequest.json();
+
+  cards.innerHTML = "";
+
+  response.forEach((user) => {
+    cards.innerHTML += `<div class= " relative flex justify-between text-center border-solid border-2 border-white w-2/4 bg-[#eac079] bg-opacity-20 m-10 card rounded border border-black  "><div><img src="${user.image}" class='w-56 h-56  object-cover border-r-2'></div> <div class= "w-auto h-auto mx-6 my-6 text-center "> <p class="text-md"> ${user.user_first_name} ${user.user_last_name}</p></div>`;
+  });
+}
