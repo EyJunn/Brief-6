@@ -23,7 +23,10 @@ async function getUser() {
   let apiRequest = await fetch("http://localhost:3006/user/getUser", request);
   let user = await apiRequest.json();
   user.forEach((user) => {
-    main.innerHTML += `<div class=" w-96 rounded-md bg-inherit backdrop-blur-sm flex items-center justify-between"><img src="http://localhost:3006/${user.avatar}" alt="User Avatar" class=" w-1/3 rounded-full"/> <div class="text-white text-3xl ">${user.user_first_name} ${user.user_last_name}</div></div>`;
+    main.innerHTML += `<div class=" relative w-96 rounded-md bg-inherit backdrop-blur-sm flex items-center justify-between "><img src="http://localhost:3006/${user.avatar}" alt="User Avatar" class=" w-1/3 rounded-full"/> <div class="text-white text-3xl ">${user.user_first_name} ${user.user_last_name}</div> <input type="text" id="search-input" oninput="getAll()" placeholder="Enter a First Name or a Email" /> <select><option value="first_name"> First_name</option> <option value="email"> Email </option></select>
+    <div id="dropDown" class=" absolute bottom-0 right-2 bg-white">
+    <ul class="user"> blob  </ul>
+    </div></div>`;
   });
 }
 getUser();
@@ -98,4 +101,73 @@ async function getAllUserByBeAdmin() {
     <div class= "w-56 h-auto mx-6 my-6 text-center text-white "> <p class="text-md "> ${user.user_first_name}
      ${user.user_last_name}</p></div></div>`;
   });
+}
+
+async function getAll() {
+  let jwt = window.localStorage.getItem("jwt");
+  const select = document.querySelector("select").value;
+  const searchInput = document.querySelector("#search-input").value;
+  const users = document.querySelector(".user");
+  const dropdown = document.querySelector("#dropDown");
+  if (!searchInput) {
+    dropdown.classList.add("hidden");
+  } else if (select == "email" && searchInput.length > 0) {
+    let request = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
+
+    let apiUser = await fetch(
+      `http://localhost:3006/user/getUserByEmail/${searchInput}`,
+      request
+    );
+    let responseUser = await apiUser.json();
+
+    if (apiUser.status === 200) {
+      dropdown.classList.remove("hidden");
+      users.innerHTML = "";
+
+      responseUser.forEach((user) => {
+        users.innerHTML += `<li><button onclick="redirectionProfile('${user.id}')">
+        <div class="flex flex-row items-center">
+        <img src="http://localhost:3006/${user.avatar}" class="w-12 object-cover h-12 rounded-full"> <p class="m-2">${user.user_first_name}</p>
+        </div
+        </button>
+        </li>
+        `;
+      });
+    }
+  } else if (select == "first_name" && searchInput.length > 0) {
+    let request = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
+
+    let apiUser = await fetch(
+      `http://localhost:3006/user/getUserByName/${searchInput}`,
+      request
+    );
+    let responseUser = await apiUser.json();
+
+    if (apiUser.status === 200) {
+      dropdown.classList.remove("hidden");
+      users.innerHTML = "";
+
+      responseUser.forEach((user) => {
+        users.innerHTML += `<li><button onclick="redirectionProfile('${user.id}')">
+    <div class="flex flex-row items-center">
+    <img src="http://localhost:3006/${user.avatar}" class="w-12 object-cover h-12 rounded-full"> <p class="m-2">${user.user_first_name}</p>
+    </div>
+    </button>
+    </li>
+    `;
+      });
+    }
+  }
 }

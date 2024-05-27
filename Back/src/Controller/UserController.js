@@ -240,6 +240,85 @@ const getAllUser = async (req, res) => {
   });
 };
 
+const follow = async (req, res) => {
+  const token = await extractToken(req);
+
+  jwt.verify(token, process.env.My_Secret_Key, async (err, authData) => {
+    if (err) {
+      console.log(err);
+      response.status(401).json({ err: "Unauthorized" });
+      return;
+    } else {
+      try {
+        const idUserCourant = authData.id;
+        const idUserFollowed = req.params.id;
+
+        const sql =
+          "INSERT INTO follow (following_user_id, followed_user_id) VALUES (?,?)";
+
+        const values = [idUserCourant, idUserFollowed];
+
+        const [rows] = pool.execute(sql, values);
+        res.json(rows);
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: "Error Server" });
+      }
+    }
+  });
+};
+
+const getUserByFN = async (req, res) => {
+  const token = await extractToken(req);
+
+  jwt.verify(token, process.env.My_Secret_Key, async (err, authData) => {
+    if (err) {
+      console.log(err);
+      response.status(401).json({ err: "Unauthorized" });
+      return;
+    } else {
+      try {
+        const Name = req.params.first_name;
+        const sql =
+          "SELECT *, CONCAT('/uploads/', user_image) as avatar FROM user WHERE  user_first_name = ?";
+
+        const value = [Name];
+
+        const [rows] = await pool.execute(sql, value);
+        res.json(rows);
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: "Error Server" });
+      }
+    }
+  });
+};
+
+const getUserByEmail = async (req, res) => {
+  const token = await extractToken(req);
+
+  jwt.verify(token, process.env.My_Secret_Key, async (err, authData) => {
+    if (err) {
+      console.log(err);
+      response.status(401).json({ err: "Unauthorized" });
+      return;
+    } else {
+      try {
+        const email = req.params.email;
+        const sql =
+          "SELECT *, CONCAT('/uploads/', user_image) as avatar FROM user WHERE  user_email = ?";
+
+        const value = [email];
+
+        const [rows] = await pool.execute(sql, value);
+        res.json(rows);
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: "Error Server" });
+      }
+    }
+  });
+};
 module.exports = {
   register,
   login,
@@ -247,4 +326,7 @@ module.exports = {
   getUser,
   activateEmail,
   getAllUser,
+  follow,
+  getUserByFN,
+  getUserByEmail,
 };
