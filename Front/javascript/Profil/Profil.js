@@ -45,6 +45,8 @@ async function GetPostFromCourantUser() {
   let apiPost = await fetch("http://localhost:3009/post/getAllPost", request);
   let post = await apiPost.json();
 
+  cards.innerHTML = "";
+
   post.post.forEach((Post) => {
     if (user[0].user_id === Post.userId) {
       cards.innerHTML += `<div class= " relative flex justify-between text-center border-solid border-2 border-white w-2/4 bg-[#eac079] bg-opacity-20 m-10 card rounded border border-black  "><div><img src="${
@@ -91,6 +93,9 @@ async function getAllUserByBeAdmin() {
   cards.innerHTML = "";
 
   response.forEach((user) => {
-    cards.innerHTML += `<div class= " relative flex justify-between text-center border-solid border-2 border-white w-2/4 bg-[#eac079] bg-opacity-20 m-10 card rounded border border-black  "><div><img src="${user.image}" class='w-56 h-56  object-cover border-r-2'></div> <div class= "w-auto h-auto mx-6 my-6 text-center "> <p class="text-md"> ${user.user_first_name} ${user.user_last_name}</p></div>`;
+    cards.innerHTML += `<div class= " relative flex-col justify-center items-center text-center border-solid border-2 border-white w-3/4 bg-[#eac079] bg-opacity-20 m-10 card rounded border border-white  ">
+    <div><img src="http://localhost:3006/${user.avatar}" class='w-72 h-56  object-cover '></div>
+    <div class= "w-56 h-auto mx-6 my-6 text-center text-white "> <p class="text-md "> ${user.user_first_name}
+     ${user.user_last_name}</p></div></div>`;
   });
 }
