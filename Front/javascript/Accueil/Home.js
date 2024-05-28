@@ -30,8 +30,6 @@ async function getAllEquipment() {
   let date = response.jwt;
   let role = response.role;
 
-  console.log(jwt);
-
   if (jwt) {
     response.post.forEach((response) => {
       cards.innerHTML += ` 
@@ -71,7 +69,7 @@ async function getAllEquipment() {
         S'inscrire
       </a>
     </header>
-    <div class="flex flex-col justify-center text-center border-solid border-2 border-white w-2/5 h-96 bg-cyan-500 bg-opacity-60 m-10 card rounded"><h2 class= "text-xl"> Bonjour, bienvenue sur ChapiChapo. Le réseau social du moment. </h2> <br>
+    <div class=" flex-col justify-center text-center border-solid border-2 border-white w-2/5 h-96 bg-cyan-500 bg-opacity-60 m-10 card rounded"><h2 class= "text-xl"> Bonjour, bienvenue sur ChapiChapo. Le réseau social du moment. </h2> <br>
       <p> Inscrits toi ou connectes toi pour voir les publications de ceux faisant partie du réseau.</p>
       </div>
        <footer class="w-full h-16 p-5 bg-white bg-opacity-80 absolute bottom-0 ">
